@@ -8,6 +8,7 @@ import AudioRecorderPlayer, {
   AudioSourceAndroidType,
 } from 'react-native-audio-recorder-player';
 import { Button, Divider, Text } from 'react-native-paper';
+import RNFetchBlob from 'rn-fetch-blob';
 
 interface AudioPlayerRecorderProps { }
 
@@ -27,8 +28,8 @@ const AudioPlayerRecorder = (props: AudioPlayerRecorderProps) => {
   }, [])
 
   const onStartRecord = async () => {
-    console.log('onStartRecord')
-    const path = 'hello.m4a';
+    const dirs = RNFetchBlob.fs.dirs;
+    const path = `${dirs.CacheDir}/hello.mp3`;
     const audioSet = {
       AudioEncoderAndroid: AudioEncoderAndroidType.AAC,
       AudioSourceAndroid: AudioSourceAndroidType.MIC,
@@ -57,7 +58,8 @@ const AudioPlayerRecorder = (props: AudioPlayerRecorderProps) => {
 
   const onStartPlay = async () => {
     console.log('onStartPlay')
-    const path = 'hello.m4a'
+    const dirs = RNFetchBlob.fs.dirs;
+    const path = `${dirs.CacheDir}/hello.mp3`;
     const msg = await audioRecorderPlayer.current!.startPlayer(path);
     audioRecorderPlayer.current!.setVolume(1.0);
     console.log(msg);
